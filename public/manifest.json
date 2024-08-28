@@ -1,0 +1,44 @@
+{
+  "name": "Flight Booking System",
+  "short_name": "FBS",
+  "start_url": "/?utm_medium=PWA&utm_source=launcher",
+  "display": "standalone",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "./logo.png",
+      "type": "image/png",
+      "sizes": "176x176",
+      "purpose": "any"
+    },
+    {
+      "src": "./logo_big.png",
+      "type": "image/png",
+      "sizes": "1240x1240",
+      "purpose": "any"
+    },
+    {
+      "src": "./maskable_icon.png",
+      "type": "image/png",
+      "sizes": "50x50",
+      "purpose": "maskable"
+    }
+  ],
+  "description": "Handy tool for booking your flights online",
+  "lang": "en",
+  "categories": ["flights", "booking", "google flights", "travel", "trip"],
+  "screenshots": [
+    {
+      "src": "./screenshot_narrow.png",
+      "type": "image/png",
+      "sizes": "473x920",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "./screenshot_wide.png",
+      "type": "image/png",
+      "sizes": "1917x918",
+      "form_factor": "wide"
+    }
+  ]
+}
