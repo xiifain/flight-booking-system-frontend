@@ -13,7 +13,10 @@ import PaymentsList from "./payments-list";
 import { Button } from "./ui/button";
 import { createBooking } from "@/api-client/add-booking";
 import { useRouter } from "next/navigation";
-import { set } from "date-fns";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+
+dayjs.extend(customParseFormat);
 
 export type BookingInfo = {
   departingFlights: number[];
@@ -168,23 +171,46 @@ export default function FlightsList() {
               </Avatar>
               <div className="mx-2">
                 <div>
-                  <div className="flex">
-                    <h2 className="text-md font-bold md:font-medium md:text-3xl md:pr-5 pr-5">
-                      {flight.flights[0].departureAirport.iataCode +
-                        " - " +
-                        flight.flights[0].destinationAirport.iataCode}
-                    </h2>
-                    <h2 className="text-md font-bold md:font-medium md:text-xs md:pr-5 pr-5">
-                      {flight.flights[0].airplane.code}
-                    </h2>
-                  </div>
-                  <h2 className="text-md font-bold md:font-medium md:text-xl md:pr-5 pr-5">
-                    {flight.flights[0].departureTime +
+                  <h2 className="text-md font-bold md:font-medium md:text-3xl md:pr-5 pr-5">
+                    {dayjs(flight.flights[0].departureTime, "HH:mm:ss").format(
+                      "h:mm A"
+                    ) +
                       " - " +
-                      flight.flights[0].arrivalTime}
+                      dayjs(flight.flights[0].arrivalTime, "HH:mm:ss").format(
+                        "h:mm A"
+                      )}
                   </h2>
                 </div>
+                <div>{flight.flights[0].airline.name}</div>
               </div>
+            </div>
+            <h2 className="text-xl font-bold">
+              {flight.layovers.length > 0
+                ? `${flight.layovers.length} Stop`
+                : "Non-Stop"}
+            </h2>
+            <div>
+              <h2 className="font-medium text-xl">
+                {(
+                  dayjs(flight.flights[0].arrivalTime, "HH:mm:ss").diff(
+                    dayjs(flight.flights[0].departureTime, "HH:mm:ss"),
+                    "minute"
+                  ) / 60
+                ).toFixed(0) +
+                  "h " +
+                  (
+                    dayjs(flight.flights[0].arrivalTime, "HH:mm:ss").diff(
+                      dayjs(flight.flights[0].departureTime, "HH:mm:ss"),
+                      "minute"
+                    ) % 60
+                  ).toFixed(0) +
+                  "m"}
+              </h2>
+              <h2 className="font-light text-md">
+                {flight.flights[0].departureAirport.iataCode +
+                  " - " +
+                  flight.flights[0].destinationAirport.iataCode}
+              </h2>
             </div>
             <h2 className="font-medium text-xl">
               {flight.totalPrice + " THB"}

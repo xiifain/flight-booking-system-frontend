@@ -16,10 +16,10 @@ export default function Bookings() {
             <div className="flex items-center">
               <div className="mx-2">
                 <div>
-                  <h2 className="text-md font-bold md:font-medium md:text-3xl md:pr-5 pr-5">
+                  <h2 className="text-xl font-bold md:font-medium md:text-3xl md:pr-5 pr-5">
                     {booking.code}
                   </h2>
-                  <h2 className="text-md font-bold md:font-medium md:text-lg md:pr-5 pr-5">
+                  <h2 className="text-md font-light md:font-medium md:text-lg md:pr-5 pr-5">
                     {booking.departingFlights[0].departureAirport.iataCode +
                       " - " +
                       booking.departingFlights[0].destinationAirport.iataCode}

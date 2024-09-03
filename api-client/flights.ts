@@ -71,8 +71,8 @@ export type Flight = {
       };
     };
   };
-  departureTime: Date;
-  arrivalTime: Date;
+  departureTime: string;
+  arrivalTime: string;
   price: number;
 };
 
