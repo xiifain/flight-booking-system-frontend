@@ -1,7 +1,27 @@
 import { API } from "@/utils/constants";
 import { fetcher } from "@/lib/fetcher";
 import useSWR from "swr";
-import { Flight } from "./flights";
+
+export type Flight = {
+  id: number;
+  departureTime: string;
+  arrivalTime: string;
+  flight: {
+    airplane: {
+      code: string;
+    };
+    airline: {
+      name: string;
+      logo: string;
+    };
+    departureAirport: {
+      iataCode: string;
+    };
+    destinationAirport: {
+      iataCode: string;
+    };
+  };
+};
 
 export type Booking = {
   id: number;

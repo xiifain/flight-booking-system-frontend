@@ -3,11 +3,6 @@ import { fetcher } from "@/lib/fetcher";
 import useSWR from "swr";
 import queryString from "query-string";
 
-export type Paginated<T> = {
-  meta: {};
-  items: Array<T>;
-};
-
 export type OverallFlightQuery = {
   origin: string;
   destination: string;
@@ -20,92 +15,39 @@ export type FlightQuery = {
   origin: string;
   destination: string;
   departureDate: string;
-  class: string;
+  returnDate?: string;
+  travelClass: string;
 };
 
-export type Flight = {
+export type FlightInstance = {
   id: number;
-  legroom?: string;
-  emission?: string;
-  airline: {
-    id: number;
-    name: string;
-    code: string;
-    country: {
-      id: number;
-      name: string;
-      isoCode: string;
-    };
-  };
-  airplane: {
-    id: number;
-    code: string;
-    type: string;
-    classes: string[];
-  };
-  departureAirport: {
-    id: number;
-    name: string;
-    iataCode: string;
-    city: {
-      id: number;
-      name: string;
-      country: {
-        id: number;
-        name: string;
-        isoCode: string;
-      };
-    };
-  };
-  destinationAirport: {
-    id: number;
-    name: string;
-    iataCode: string;
-    city: {
-      id: number;
-      name: string;
-      country: {
-        id: number;
-        name: string;
-        isoCode: string;
-      };
-    };
-  };
+  code: string;
+  logo: string;
   departureTime: string;
   arrivalTime: string;
+  originAirportCode: string;
+  destinationAirportCode: string;
+  duration: number;
+  fareClass: string;
   price: number;
 };
 
-export type LayOver = {
-  duration: number;
-  airport: {
-    id: number;
-    name: string;
-    iataCode: string;
-    city: {
-      id: number;
-      name: string;
-      country: {
-        id: number;
-        name: string;
-        isoCode: string;
-      };
-    };
-  };
+export type FlightQueryResponse = {
+  id: string;
+  logo: string;
+  totalDuration: string;
+  totalPrice: number;
+  stops: number;
+  flights: FlightInstance[];
 };
 
 export type FlightResponse = {
-  id: number;
-  logo?: string;
-  flights: Flight[];
-  layovers: LayOver[];
-  totalPrice: number;
-  totalCO2Emission: string;
-  type: string;
+  outboundFlights: FlightQueryResponse[];
+  returnFlights: FlightQueryResponse[];
 };
 
 export function useFlightsSearch(query: FlightQuery) {
-  const { data, error, isLoading, mutate } = useSWR<Paginated<FlightResponse>>(
+  const { data, error, isLoading, mutate } = useSWR<FlightResponse>(
     queryString.stringifyUrl(
       { url: API.flights.search, query },
       { skipEmptyString: true }
